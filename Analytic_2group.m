@@ -5,9 +5,9 @@ function info = Analytic_2group(meshnum, angle_flag, n_z)
 
 outerbox = 1;
 innerbox = 0.1;
-material = 'reflector'; %material surrounding source
+material = 'scatterer'; %material surrounding source
 
-group_edge = [0 0.5 3]';
+group_edge = [0 2.5 3]';
 
 
 h = outerbox / meshnum;
@@ -102,5 +102,7 @@ str = sprintf('%s  |  %i elements  |  %s    |  %i directions', upper(material),.
 
 title(str)
 hold off
+xlabel('x', 'FontSize', 20)
+ylabel('\phi_0', 'FontSize', 20)
 
 end
