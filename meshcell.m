@@ -66,12 +66,14 @@ classdef meshcell
             %calculates average psi contribution and outgoing psi through
             %the cell for each group at angle Oz.
             
-            Qnew = obj.Qg +  0.5 * obj.sig_s .* phi_old + ...                I can use flipud because I have just two groups
-                0.5 * obj.sig_s .* flipud(phi_old);
+            dE = diff(obj.group_edge);
+            
+            Qnew = obj.Qg +  0.5 * obj.sig_s .* phi_old .* dE  + ...                I can use flipud because I have just two groups
+                0.5 * obj.sig_s .* flipud(phi_old) .* flipud(dE);                          %need to weight by size of group
             S = Qnew / obj.sig_t;
             
             h = obj.sidelength;
-            tau = obj.sig_t * h ./ Oz;
+            tau = obj.sig_t * h ./ abs(Oz);
             
             psi_z = psi_in .* obj.f(tau) + S * (1 - obj.f(tau));
             
