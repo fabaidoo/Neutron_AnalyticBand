@@ -67,9 +67,11 @@ classdef meshcell
             %the cell for each group at angle Oz.
             
             dE = diff(obj.group_edge);
+            dEtot = abs(obj.group_edge(end) - obj.group_edge(1));
+            dE_p = dE / dEtot;
             
-            Qnew = obj.Qg +  0.5 * obj.sig_s .* phi_old .* dE  + ...                I can use flipud because I have just two groups
-                0.5 * obj.sig_s .* flipud(phi_old) .* flipud(dE);                          %need to weight by size of group
+            Qnew = obj.Qg +  0.5 * obj.sig_s .* phi_old .* dE_p  + ...                I can use flipud because I have just two groups
+                0.5 * obj.sig_s .* flipud(phi_old) .* flipud(dE_p);                          %need to weight by size of group
             S = Qnew / obj.sig_t;
             
             h = obj.sidelength;

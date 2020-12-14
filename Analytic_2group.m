@@ -5,9 +5,9 @@ function info = Analytic_2group(meshnum, angle_flag, n_z)
 
 outerbox = 1;
 innerbox = 0.1;
-material = 'test'; %material surrounding source
+material = 'reflector'; %material surrounding source
 
-group_edge = [0 0.5 1]';
+group_edge = [0 0.5 3]';
 
 
 h = outerbox / meshnum;
@@ -81,10 +81,26 @@ while iter <= max_iter && err > tol
    
 end
 
-info = sprintf('Error = %.3g  |  Iterations = %i', err, iter);
+info = sprintf('%s | Error = %.3g  |  Iterations = %i', upper(material),...
+    err, iter);
 
 %phi
-plot(cent, phi(1,:), 'r', cent, phi(2,:), 'b')
 
+
+figure
+str1 = sprintf('Group [%.2f %.2f]', group_edge(1), group_edge(2) );
+str2 = sprintf('Group [%.2f %.2f]', group_edge(2), group_edge(3) );
+plot(cent, phi(1,:), 'r', 'MarkerSize', 11,'LineWidth', 1.5,...
+    'DisplayName', str1)
+hold on
+plot(cent, phi(2,:), 'b', 'MarkerSize', 11, 'LineWidth', 1.5, ...
+    'DisplayName', str2)
+legend('FontSize', 12)
+
+str = sprintf('%s  |  %i elements  |  %s    |  %i directions', upper(material),...
+     meshnum, upper(angle_flag), n_z);
+
+title(str)
+hold off
 
 end
